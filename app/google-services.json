@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "157603782744",
+    "firebase_url": "https://chatpetproj-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "chatpetproj",
+    "storage_bucket": "chatpetproj.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:157603782744:android:27457087d50fd388e26a2d",
+        "android_client_info": {
+          "package_name": "com.example.mangapet"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVmXygb-P_fdTH0xtaF8R8M2-BDCNF6wA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

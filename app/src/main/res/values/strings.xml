@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Manga pet</string>
+    <string name="register">Don\'t have an account? <b>Sign up</b></string>
+    <string name="login">Already have an account? <b>Sign in</b></string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

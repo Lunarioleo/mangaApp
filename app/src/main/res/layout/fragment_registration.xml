@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Registration">
+
+    <androidx.constraintlayout.utils.widget.ImageFilterView
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/bg_register"
+        android:layout_gravity="end"
+        android:alpha="0.2"
+        />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Register"
+        android:textColor = "@color/black"
+        android:fontFamily="sans-serif-condensed"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="250dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Please register to continue"
+        android:textColor="@color/loginColor"
+        android:fontFamily="sans-serif-condensed"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="300dp"
+        android:textSize="15sp"
+        android:textStyle="bold"/>
+
+    <EditText
+        android:id="@+id/registerEmail"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:hint="Email"
+        android:textColor="@color/secondaryLoginColor"
+        android:textColorHint="@color/secondaryLoginColor"
+        android:backgroundTint="@color/secondaryLoginColor"
+        android:layout_marginStart="65dp"
+        android:layout_marginTop="330dp"/>
+
+    <EditText
+        android:id="@+id/registerPassword"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:hint="Password"
+        android:textColor="@color/secondaryLoginColor"
+        android:textColorHint="@color/secondaryLoginColor"
+        android:backgroundTint="@color/secondaryLoginColor"
+        android:layout_marginStart="65dp"
+        android:layout_marginTop="400dp"/>
+
+    <Button
+        android:id="@+id/registrationButton"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/black"
+        android:text="Register"
+        android:fontFamily="sans-serif-condensed"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="500dp"/>
+
+    <TextView
+        android:id="@+id/signInView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login"
+        android:textColor="@color/black"
+        android:fontFamily="sans-serif-condensed"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="560dp"/>
+
+</FrameLayout>
