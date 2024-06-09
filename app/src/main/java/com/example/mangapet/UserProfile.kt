@@ -20,8 +20,7 @@ class UserProfile : Fragment() {
         super.onCreate(savedInstanceState)
         binding = FragmentUserProfileBinding.inflate(layoutInflater)
         myViewModel = ViewModelProvider(requireActivity())[MyViewModel::class.java]
-//        myViewModel.retrieveImageFromDatabase()
-        myViewModel.getUserInfo()
+        myViewModel.getCurrentUserInfo()
     }
 
     override fun onCreateView(
@@ -38,29 +37,31 @@ class UserProfile : Fragment() {
             when (it){
                 is MyViewModel.UiStates.UserFullInfo->{
                     binding.profileUserName.text = it.userName
-                    if (it.profileAvatar != null) {
                         Picasso.get()
                             .load(it.profileAvatar)
                             .into(binding.profileAvatar)
-                    }
                 }
                 else->{}
             }
         }
+
         binding.buttonLogout.setOnClickListener {
             Firebase.auth.signOut()
                 parentFragmentManager.beginTransaction()
                     .replace(R.id.container, Login())
                     .commit()
         }
-
         binding.buttonUserSettings.setOnClickListener {
             parentFragmentManager.beginTransaction()
                 .replace(R.id.container, UserSettings())
                 .addToBackStack("UserProfile")
                 .commit()
         }
+        binding.buttonUserList.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.container, UsersList())
+                .addToBackStack("UserProfile")
+                .commit()
+        }
     }
-
-
 }

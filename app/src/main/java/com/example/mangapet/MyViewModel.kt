@@ -83,37 +83,22 @@ class MyViewModel @Inject constructor(private val repo: Repository) : ViewModel(
             imageRef.downloadUrl.addOnSuccessListener { uri ->
                 val imageUrl = uri.toString()
                 val target = getCurrentUserTarget()
-                target?.child("pfImage")?.setValue(imageUrl)?.addOnSuccessListener {
-                    //retrieveImageFromDatabase()
+                target?.child("pfImage")?.setValue(imageUrl)?.addOnCompleteListener { updateTask ->
+                    if (updateTask.isSuccessful) {
+                        _uiState.postValue(UiStates.UserFullInfo(getCurrentUser().currentUser?.displayName ?: "UnknownUser", imageUrl))
+                        getCurrentUserInfo()  // Fetch the updated user info immediately
+                    }
                 }
+
+
             }
         }
     }
 
+
     fun getCurrentUser(): FirebaseAuth {
         return repo.getDatabaseAuth()
     }
-
-//    private fun retrieveImageFromDatabase() {
-//        val target = getCurrentUserTarget()
-//        val imageRef = target?.child("pfImage")
-//        imageRef?.addListenerForSingleValueEvent(object : ValueEventListener {
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//                if (snapshot.exists()) {
-//                    val imageUrl = snapshot.getValue(String::class.java)
-////                    _uiState.postValue(
-////                        UiStates.UserSettingsState(
-////                            userAvatar = imageUrl,
-////                            description = "Success!"
-////                        )
-////                    )
-//                }
-//            }
-//            override fun onCancelled(error: DatabaseError) {
-//               // _uiState.postValue(UiStates.UserSettingsState(description = "Error: ${error.message}"))
-//            }
-//        })
-//    }
 
 
     fun changeUserName(userName: String) {
@@ -125,20 +110,41 @@ class MyViewModel @Inject constructor(private val repo: Repository) : ViewModel(
                 currentUser.updateProfile(profileUpdates).addOnCompleteListener {
                 if (it.isSuccessful){
                     getCurrentUserTarget()?.child("displayName")?.setValue(userName)
+                    getCurrentUserInfo()
                 }
             }
         }
     }
 
-    fun getUserInfo(){
+    fun getCurrentUserInfo(){
         val target = getCurrentUserTarget()
         target?.addValueEventListener(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()){
                     val data = snapshot.getValue(User::class.java)
-                    _uiState.postValue(UiStates.UserFullInfo(userName = data?.displayName!!, data.pfImage))
+                    _uiState.postValue(UiStates.UserFullInfo(userName = data?.displayName?: "Unknown user", data?.pfImage?: "https://www.shareicon.net/data/512x512/2015/10/16/656968_info_512x512.png"))
                 }
             }
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+    }
+
+    fun getUsersList(){
+        val target = database
+        val list = ArrayList<User>()
+        target.addValueEventListener(object: ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                list.clear()
+                    snapshot.children.forEach {
+                        val data = it.getValue(User::class.java)
+                        list.add(data!!)
+                        _uiState.postValue(UiStates.UsersInfoList(list))
+                    }
+
+            }
+
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
@@ -150,13 +156,10 @@ class MyViewModel @Inject constructor(private val repo: Repository) : ViewModel(
 
     sealed class UiStates {
         class UserState(val isUserRegistered: Boolean, val description: String) : UiStates()
-//        class UserSettingsState(
-//            val userAvatar: String? = "",
-//            val userBackground: String = "",
-//            val description: String,
-//        ) : UiStates()
-        class UserNameChange(val userName: String): UiStates()
-        class UserFullInfo(val userName: String, val profileAvatar: String?): UiStates()
+
+        class UserFullInfo(val userName: String?, val profileAvatar: String?): UiStates()
+
+        class UsersInfoList(val usersList: List<User>): UiStates()
     }
 }
 

@@ -29,8 +29,6 @@ class UserSettings : Fragment() {
         super.onCreate(savedInstanceState)
         binding = FragmentUserSettingsBinding.inflate(layoutInflater)
         myViewModel = ViewModelProvider(requireActivity())[MyViewModel::class.java]
-       // myViewModel.retrieveImageFromDatabase()
-        myViewModel.getUserInfo()
     }
 
     override fun onCreateView(
@@ -44,21 +42,16 @@ class UserSettings : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        myViewModel.getCurrentUserInfo()
 
 
 
         myViewModel.uiState.observe(viewLifecycleOwner){
             when (it){
-                is MyViewModel.UiStates.UserNameChange->{
-                    binding.userName.text = it.userName
-                }
                 is MyViewModel.UiStates.UserFullInfo->{
-                    if(it.profileAvatar != null){
                         Picasso.get()
                             .load(it.profileAvatar)
                             .into(binding.settingsAvatar2)
-                    }
                     binding.userName.text = it.userName
                 }
                 else->{}
